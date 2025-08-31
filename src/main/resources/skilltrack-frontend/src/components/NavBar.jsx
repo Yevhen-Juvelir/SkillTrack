@@ -2,8 +2,8 @@ import React from 'react'
 
 const NavBar = () => {
   return (
-    <header>
-        <nav className="flex flex-row justify-between px-40 text-3xl py-15">
+    <header className="main-section">
+        <nav className="flex flex-row justify-between text-3xl py-15">
             <div>
                 SkillTrack
             </div>
