@@ -9,11 +9,11 @@ import skilltrack.skilltrack.service.UserService;
 
 @Controller
 @RequestMapping("/users")
-public class LoginController {
+public class UserLoginController {
     UserService userService;
 
 
-    public LoginController(UserService userService) {
+    public UserLoginController(UserService userService) {
         this.userService = userService;
     }
 
@@ -26,6 +26,10 @@ public class LoginController {
     public String processLoginForm(
             @RequestParam String email,
             @RequestParam String password) {
+
+        System.out.println("=== ПОЛУЧЕНЫ ДАННЫЕ РЕГИСТРАЦИИ ===");
+        System.out.println("Email: " + email);
+        System.out.println("Password: " + password);
 
         if(userService.verifyUser(email, password)){
             return "redirect:/"; // Успешный логин

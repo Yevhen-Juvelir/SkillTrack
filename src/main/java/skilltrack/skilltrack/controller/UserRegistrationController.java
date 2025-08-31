@@ -6,17 +6,18 @@ import skilltrack.skilltrack.service.UserService;
 
 @Controller
 @RequestMapping("/users") // Базовый путь для всех endpoints пользователей
-public class UserController {
+public class UserRegistrationController {
 
     private final UserService userService;
 
 
-    public UserController(UserService userService) {
+    public UserRegistrationController(UserService userService) {
         this.userService = userService;
     }
 
     @GetMapping("/register")
     public String showRegisterForm() {
+        System.out.println("Показана форма регистрации");
         return "register";
     }
 
@@ -26,16 +27,20 @@ public class UserController {
             @RequestParam String password,
             @RequestParam String username) {
 
-        if (userService.saveUser(email, password, username)) {
+        System.out.println("=== ПОЛУЧЕНЫ ДАННЫЕ РЕГИСТРАЦИИ ===");
+        System.out.println("Email: " + email);
+        System.out.println("Username: " + username);
+        System.out.println("Password: " + password);
+
+        boolean result = userService.saveUser(email, password, username);
+        System.out.println("Результат сохранения: " + result);
+
+        if (result) {
+            System.out.println("Регистрация успешна");
             return "redirect:/users/login";
         } else {
+            System.out.println("Ошибка регистрации");
             return "redirect:/users/register?error";
         }
-    }
-
-    // Переброс на странцу профиля
-    @GetMapping("/profile")
-    public String showProfile() {
-        return "profile";
     }
 }

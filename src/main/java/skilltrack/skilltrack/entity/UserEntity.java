@@ -1,24 +1,47 @@
 package skilltrack.skilltrack.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
-
+@Table(name = "users")
 public class UserEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
-    private String username;
-    private String password;
-    private String email;
-    private String lvl;
 
+    @Column(name = "username")
+    private String username;
+
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "lvl")
+    private int lvl;
+
+    @Column(name = "role")
     private Boolean role; // 0(false) = user | 1(true) = admin
 
+    @Column(name = "exp")
     private long exp;
+
+
+    public UserEntity() {
+        // Пустой конструктор
+    }
+
+    public UserEntity(String email, String password, String username) {
+        this.email = email;
+        this.password = password;
+        this.username = username;
+        this.lvl = 1;
+        this.role = false; // по умолчанию пользователь
+        this.exp = 0;
+    }
 
 
     public long getId() {
@@ -53,11 +76,11 @@ public class UserEntity {
         this.email = email;
     }
 
-    public String getLvl() {
+    public int getLvl() {
         return lvl;
     }
 
-    public void setLvl(String lvl) {
+    public void setLvl(int lvl) {
         this.lvl = lvl;
     }
 
