@@ -1,4 +1,5 @@
 import React from 'react'
+import Button from './Button'
 
 const Moto = () => {
   return (
@@ -9,6 +10,7 @@ const Moto = () => {
         <div className="text-base max-w-[350px]">
             Improve your programming skills and achieve your goals with Skill Track's comprehensive progress tracking.
         </div>
+        <Button />
     </section>
   )
 }
