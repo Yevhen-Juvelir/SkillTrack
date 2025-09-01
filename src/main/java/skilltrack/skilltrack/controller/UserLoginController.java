@@ -1,14 +1,13 @@
 package skilltrack.skilltrack.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import skilltrack.skilltrack.dto.LoginRequesr;
 import skilltrack.skilltrack.service.UserService;
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("api/users")
 public class UserLoginController {
     UserService userService;
 
@@ -17,25 +16,16 @@ public class UserLoginController {
         this.userService = userService;
     }
 
-    @GetMapping("/login")
-    public String showLoginForm() {
-        System.out.println("showLoginForm");
-        return "login"; // Просто показываем форму логина
-    }
 
     @PostMapping("/login") // Используем POST для безопасности!
-    public String processLoginForm(
-            @RequestParam String email,
-            @RequestParam String password) {
+    public ResponseEntity<String> processLoginForm(@RequestBody LoginRequesr request) {
+        boolean result = userService.verifyUser(request.getEmail(), request.getPassword());
 
-        System.out.println("=== ПОЛУЧЕНЫ ДАННЫЕ РЕГИСТРАЦИИ ===");
-        System.out.println("Email: " + email);
-        System.out.println("Password: " + password);
-
-        if(userService.verifyUser(email, password)){
-            return "redirect:/homepage"; // Успешный логин
+        if (result) {
+            return ResponseEntity.ok("ok");
         } else {
-            return "redirect:/users/login?error"; // Ошибка логина
+            return ResponseEntity.badRequest().body("error");
         }
+
     }
 }

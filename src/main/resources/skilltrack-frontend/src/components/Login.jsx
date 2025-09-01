@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
     const [formData, setFormData] = useState({
         email: "",
         password: "",
     });
+
+    const navigate = useNavigate(); // хук для редиректа
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -19,26 +22,24 @@ export default function Login() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(formData), // email + password
+                body: JSON.stringify(formData),
             });
 
-            if (!response.ok) {
-                throw new Error("Login failed");
+            // Читаем JSON в любом случае
+            const data = await response.text();
+            console.log("Registration successful:", data);
+
+
+            if (data.includes("ok")) {
+                console.log("Login successful:", data);
+                navigate("/homepage"); // редирект на главную страницу
+            } else {
+                alert(data); // выводим ошибку от сервера
             }
 
-            const data = await response.json();
-            console.log("Login successful:", data);
-
-            // Example: save token if your API returns one
-            if (data.token) {
-                localStorage.setItem("authToken", data.token);
-            }
-
-            alert("Login successful!");
-            // navigate("/dashboard"); if using react-router
         } catch (error) {
             console.error("Error:", error);
-            alert("Invalid credentials. Please try again.");
+            alert("Произошла ошибка при подключении к серверу.");
         }
     };
 

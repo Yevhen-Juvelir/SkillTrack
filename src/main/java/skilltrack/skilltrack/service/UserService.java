@@ -27,7 +27,7 @@ public class UserService {
                 System.out.println("Пользователь с username " + username + " уже существует");
                 return false;
             }
-
+            System.out.println(password);
             // Создаем нового пользователя
             UserEntity user = new UserEntity();
             user.setEmail(email);
@@ -51,13 +51,17 @@ public class UserService {
 
     public boolean verifyUser(String email, String password) {
         try {
-            UserEntity user = userRepository.findByEmail(email);
+            System.out.println("начало проверки" + email + " " + password);
+            UserEntity user = userRepository.findByEmailIgnoreCase(email.trim());
+            System.out.println("Пользователь найден: " + (user != null ? user.getEmail() : "null"));
+
             if (user == null) {
                 System.out.println("Пользователь с email " + email + " не найден");
                 return false;
             }
 
             boolean passwordMatches = passwordEncoder.matches(password, user.getPassword());
+            System.out.println(passwordMatches);
             if (!passwordMatches) {
                 System.out.println("Неверный пароль для пользователя: " + email);
             }

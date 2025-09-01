@@ -15,9 +15,6 @@ public class HomePageController {
         this.userService = userService;
     }
 
-    @GetMapping("/homepage")
-    public String showHomePage() {
-        return "index";
-    }
+
 
 }
