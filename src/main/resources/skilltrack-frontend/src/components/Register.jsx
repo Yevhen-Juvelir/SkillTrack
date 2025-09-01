@@ -19,7 +19,7 @@ export default function Register() {
       return;
     }
     console.log("Registered user:", formData);
-    // Add API call here
+
   };
 
   return (
