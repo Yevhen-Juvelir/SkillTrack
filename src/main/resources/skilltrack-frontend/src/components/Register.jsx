@@ -12,15 +12,42 @@ export default function Register() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
-    console.log("Registered user:", formData);
-    // Add API call here
+
+    try {
+      const response = await fetch("http://localhost:8080/api/users/registrations", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to register");
+      }
+
+      const data = await response.json();
+      console.log("Registration successful:", data);
+      alert("Registration successful!");
+      // maybe redirect to login
+      // navigate("/login"); if using react-router
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Registration failed. Please try again.");
+    }
   };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
