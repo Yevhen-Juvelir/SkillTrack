@@ -37,7 +37,7 @@ public class UserRegistrationController {
 
         if (result) {
             System.out.println("Регистрация успешна");
-            return "redirect:/users/login";
+            return "redirect:/homepage";
         } else {
             System.out.println("Ошибка регистрации");
             return "redirect:/users/register?error";

@@ -19,6 +19,7 @@ public class UserLoginController {
 
     @GetMapping("/login")
     public String showLoginForm() {
+        System.out.println("showLoginForm");
         return "login"; // Просто показываем форму логина
     }
 
@@ -32,7 +33,7 @@ public class UserLoginController {
         System.out.println("Password: " + password);
 
         if(userService.verifyUser(email, password)){
-            return "redirect:/"; // Успешный логин
+            return "redirect:/homepage"; // Успешный логин
         } else {
             return "redirect:/users/login?error"; // Ошибка логина
         }
