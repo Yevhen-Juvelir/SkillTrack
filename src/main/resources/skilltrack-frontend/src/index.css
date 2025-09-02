@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+@theme {
+    --color-accent-100: #9367af;
+    --color-accent-200: #392e40;
+    --color-ui: #151616;
+}
+
 @layer base {
     * {
         margin: 0;

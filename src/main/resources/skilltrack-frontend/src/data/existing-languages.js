@@ -1,4 +1,4 @@
-[
+const existingLanguages = [
   {
     "name": "JavaScript",
     "slug": "javascript",
@@ -60,3 +60,5 @@
     "icon": "/icons/rust.svg"
   }
 ]
+
+export default existingLanguages
