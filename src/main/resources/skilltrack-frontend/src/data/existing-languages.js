@@ -1,0 +1,64 @@
+const existingLanguages = [
+  {
+    "name": "JavaScript",
+    "slug": "javascript",
+    "levels": ["beginner", "intermediate", "advanced"],
+    "icon": "/icons/javascript.svg"
+  },
+  {
+    "name": "Python",
+    "slug": "python",
+    "levels": ["beginner", "intermediate", "advanced"],
+    "icon": "/icons/python.svg"
+  },
+  {
+    "name": "Java",
+    "slug": "java",
+    "levels": ["beginner", "intermediate", "advanced"],
+    "icon": "/icons/java.svg"
+  },
+  {
+    "name": "C++",
+    "slug": "cpp",
+    "levels": ["beginner", "intermediate", "advanced"],
+    "icon": "/icons/cpp.svg"
+  },
+  {
+    "name": "C#",
+    "slug": "csharp",
+    "levels": ["beginner", "intermediate", "advanced"],
+    "icon": "/icons/csharp.svg"
+  },
+  {
+    "name": "Go",
+    "slug": "go",
+    "levels": ["beginner", "intermediate", "advanced"],
+    "icon": "/icons/go.svg"
+  },
+  {
+    "name": "Ruby",
+    "slug": "ruby",
+    "levels": ["beginner", "intermediate", "advanced"],
+    "icon": "/icons/ruby.svg"
+  },
+  {
+    "name": "PHP",
+    "slug": "php",
+    "levels": ["beginner", "intermediate", "advanced"],
+    "icon": "/icons/php.svg"
+  },
+  {
+    "name": "TypeScript",
+    "slug": "typescript",
+    "levels": ["beginner", "intermediate", "advanced"],
+    "icon": "/icons/typescript.svg"
+  },
+  {
+    "name": "Rust",
+    "slug": "rust",
+    "levels": ["beginner", "intermediate", "advanced"],
+    "icon": "/icons/rust.svg"
+  }
+]
+
+export default existingLanguages
