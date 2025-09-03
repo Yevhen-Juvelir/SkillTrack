@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import existingLanguages from "../data/existing-languages";
 
 const Languages = () => {
-  const [flippedCard, setFlippedCard] = useState(null); // slug of flipped card
   const [chosen, setChosen] = useState([]); // { name, slug, level }
+  const [editing, setEditing] = useState(null);
+
 
   const handleSelectLevel = (language, level) => {
     // Update chosen array
@@ -12,7 +13,6 @@ const Languages = () => {
       const filtered = prev.filter((item) => item.slug !== language.slug);
       return [...filtered, entry];
     });
-    setFlippedCard(null); // flip back after selection
   };
 
   const getSelectedLevel = (slug) => {
@@ -25,22 +25,18 @@ const Languages = () => {
       {/* Languages grid */}
       <div className="flex flex-wrap gap-4 flex-1 justify-center">
         {existingLanguages.map((language) => {
-          const isFlipped = flippedCard === language.slug;
           const selectedLevel = getSelectedLevel(language.slug);
 
           return (
             <div
               key={language.slug}
-              className="w-24 h-32 perspective"
-              onClick={() => !isFlipped && setFlippedCard(language.slug)}
+              className="w-24 h-32 perspective flip-box"
             >
               <div
-                className={`relative w-full h-full duration-500 transform-style preserve-3d transition-transform ${
-                  isFlipped ? "rotate-y-180" : ""
-                }`}
+                className="flip-box-inner bg-accent-100 hover:bg-accent-200 rounded-xl"
               >
                 {/* Front */}
-                <div className="absolute backface-hidden w-full h-full bg-accent-100 hover:bg-accent-200 text-white flex flex-col items-center justify-center rounded-xl p-3 shadow-lg cursor-pointer">
+                <div className="flip-box-front flex flex-col items-center justify-center">
                   <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mb-2">
                     <img
                       src={language.icon}
@@ -48,7 +44,7 @@ const Languages = () => {
                       className="w-2/3 h-2/3 object-contain"
                     />
                   </div>
-                  <div className="text-center bg-black/25 px-2 py-1 rounded">
+                  <div className="text-center text-white bg-black/25 px-2 py-1 rounded">
                     {language.name}
                   </div>
                   {selectedLevel && (
@@ -59,9 +55,8 @@ const Languages = () => {
                 </div>
 
                 {/* Back */}
-                <div className="absolute backface-hidden w-full h-full bg-accent-100 text-white flex flex-col items-center justify-center rounded-xl shadow-lg rotate-y-180">
-                  <h3 className="mb-2 font-bold text-center">Select Level</h3>
-                  <div className="flex flex-col gap-2">
+                <div className="flip-box-back">
+                  <div className="flex flex-col justify-center items-center gap-2 h-full">
                     {language.levels.map((level) => (
                       <button
                         key={level}
@@ -72,12 +67,6 @@ const Languages = () => {
                       </button>
                     ))}
                   </div>
-                  <button
-                    onClick={() => setFlippedCard(null)}
-                    className="mt-auto px-3 py-1 bg-red-600 rounded-lg hover:bg-red-500 text-white text-sm transition-colors duration-200"
-                  >
-                    Cancel
-                  </button>
                 </div>
               </div>
             </div>
@@ -86,7 +75,7 @@ const Languages = () => {
       </div>
 
       {/* Side tracker */}
-      <div className="w-64 bg-accent-100 text-white p-5 rounded-xl shadow-lg flex flex-col gap-4">
+      <div className="w-94 bg-accent-100 text-white p-5 rounded-xl shadow-lg flex flex-col gap-4" onMouseLeave={() => setEditing(null)}>
         <h2 className="text-lg font-bold">Your Selection</h2>
         {chosen.length === 0 ? (
           <p className="text-sm text-gray-200">No languages selected yet</p>
@@ -95,11 +84,54 @@ const Languages = () => {
             {chosen.map((item) => (
               <li
                 key={item.slug}
-                className="bg-black/25 px-3 py-2 rounded-md flex justify-between items-center"
+                className="bg-black/25 px-3 py-2 rounded-md flex justify-between items-center relative"
               >
                 <span>{item.name}</span>
-                <span className="text-green-300 text-sm">{item.level}</span>
+
+                <div className="flex gap-4 items-center">
+                  {/* Level badge */}
+                  <div className="relative">
+                    <span
+                      className="px-2 py-1 rounded bg-green-600 text-white text-sm cursor-pointer"
+                      onClick={() => setEditing(editing === item.slug ? null : item.slug)}
+                    >
+                      {item.level} ▼
+                    </span>
+
+                    {/* Popover */}
+                    {editing === item.slug && (
+                      <div className="absolute right-0 mt-2 flex flex-col bg-white text-black rounded shadow-lg flex flex-col z-10" onMouseLeave={() => setEditing(null)}>
+                        {["beginner", "intermediate", "advanced"].map((level) => (
+                          <button
+                            key={level}
+                            onClick={() => {
+                              setChosen((prev) =>
+                                prev.map((i) =>
+                                  i.slug === item.slug ? { ...i, level } : i
+                                )
+                              );
+                              setEditing(null);
+                            }}
+                            className="px-3 py-1 text-sm hover:bg-green-400 bg-white hover:text-white rounded"
+                          >
+                            {level}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  <span
+                    className="text-red-500 hover:text-red-700 transition-colors duration-300 cursor-pointer"
+                    onClick={() => {
+                      setChosen((prev) => prev.filter((i) => i.slug !== item.slug));
+                    }}
+                  >
+                    Delete
+                  </span>
+                </div>
               </li>
+
             ))}
           </ul>
         )}
