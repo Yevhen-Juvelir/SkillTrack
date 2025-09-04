@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
@@ -7,7 +7,15 @@ export default function Login() {
         password: "",
     });
 
-    const navigate = useNavigate(); // хук для редиректа
+    const navigate = useNavigate();
+
+    // проверяем был ли этот пользователь зарегестрирован раньше для автоматической регистрации
+    useEffect(() => {
+        const savedEmail = localStorage.getItem("userEmail");
+        if (savedEmail) {
+            navigate("/homepage");
+        }
+    }, [navigate]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,24 +33,22 @@ export default function Login() {
                 body: JSON.stringify(formData),
             });
 
-            // Читаем JSON в любом случае
             const data = await response.text();
-            console.log("Registration successful:", data);
-
+            console.log("Login response:", data);
 
             if (data.includes("ok")) {
-                console.log("Login successful:", data);
-                navigate("/homepage"); // редирект на главную страницу
-            } else {
-                alert(data); // выводим ошибку от сервера
-            }
+                // сохраняем данные мейла для сохранение данных
+                localStorage.setItem("userEmail", formData.email);
 
+                navigate("/homepage");
+            } else {
+                alert(data);
+            }
         } catch (error) {
             console.error("Error:", error);
             alert("Произошла ошибка при подключении к серверу.");
         }
     };
-
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50">

@@ -23,6 +23,13 @@ export default function Register() {
       return;
     }
 
+    // Проверяем localStorage
+    const storedEmail = localStorage.getItem("userEmail");
+    if (storedEmail && storedEmail !== formData.email) {
+      // Если старая почта есть и она отличается от новой, удаляем её
+      localStorage.removeItem("userEmail");
+    }
+
     try {
       const response = await fetch("http://localhost:8080/api/users/register", {
         method: "POST",
@@ -40,14 +47,14 @@ export default function Register() {
         throw new Error("Failed to register");
       }
 
-      // если хочешь вывести текст с бэка (например "Регистрация успешна")
       const data = await response.text();
       console.log("Registration successful:", data);
 
-
       if (data.includes("ok")) {
-        console.log("Login successful:", data);
-        navigate("/login"); // редирект на главную страницу
+        // Сохраняем новую почту в localStorage
+        localStorage.setItem("userEmail", formData.email);
+
+        navigate("/login"); // редирект на страницу логина
       } else {
         alert(data); // выводим ошибку от сервера
       }
@@ -57,6 +64,7 @@ export default function Register() {
       alert("Registration failed. Please try again.");
     }
   };
+
 
   return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
