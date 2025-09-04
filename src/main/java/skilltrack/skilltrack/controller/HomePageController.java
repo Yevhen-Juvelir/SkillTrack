@@ -11,6 +11,7 @@ import skilltrack.skilltrack.service.UserService;
 public class HomePageController {
 
     UserService userService;
+
     public HomePageController(UserService userService) {
         this.userService = userService;
     }

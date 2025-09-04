@@ -27,7 +27,6 @@ public class UserService {
                 System.out.println("Пользователь с username " + username + " уже существует");
                 return false;
             }
-            System.out.println(password);
             // Создаем нового пользователя
             UserEntity user = new UserEntity();
             user.setEmail(email);

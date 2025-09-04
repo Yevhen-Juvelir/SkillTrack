@@ -1,6 +1,6 @@
 package skilltrack.skilltrack.dto;
 
-public class LoginRequesr {
+public class LoginRequest {
     private String email;
     private String password;
 
