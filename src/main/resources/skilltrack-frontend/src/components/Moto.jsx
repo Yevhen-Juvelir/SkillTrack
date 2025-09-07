@@ -3,7 +3,7 @@ import Button from './Button'
 
 const Moto = () => {
   return (
-    <section className="flex flex-col main-section align-center gap-12 max-w-4xl">
+    <section className="flex flex-col main-section align-center gap-12 max-w-4xl ">
         <div className="text-6xl font-bold">
             Track your <br /> coding progress
         </div>

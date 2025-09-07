@@ -52,7 +52,7 @@ const Languages = () => {
   };
 
   return (
-      <div className="flex items-start justify-center h-screen bg-ui p-10 gap-10">
+      <div className="flex items-start justify-center h-screen bg-ui-100 p-10 gap-10">
         {/* Languages grid */}
         <div className="flex flex-wrap gap-4 flex-1 justify-center">
           {existingLanguages.map((language) => {

@@ -5,10 +5,10 @@ import Button from '../components/Button'
 
 const HomePage = () => {
   return (
-    <>
+    <div className="ui">
         <NavBar />
         <Moto />
-    </>
+    </div>
   )
 }
 
