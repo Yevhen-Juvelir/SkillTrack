@@ -3,7 +3,9 @@
 @theme {
     --color-accent-100: #9367af;
     --color-accent-200: #392e40;
-    --color-ui: #151616;
+    --color-ui-100: #151616;
+    --color-ui-200: #282929;
+    --color-ui-300: #383838;
 }
 
 @layer base {
@@ -17,5 +19,13 @@
 @layer utilities {
     .main-section {
         @apply px-40;
+    }
+
+    .ui {
+        @apply bg-ui-100 text-white;
+    }
+
+    .menu-list-item {
+        @apply hover:bg-ui-300;
     }
 }
