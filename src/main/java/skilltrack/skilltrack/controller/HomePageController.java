@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import skilltrack.skilltrack.service.UserService;
 
 @Controller
-@RequestMapping("")
+@RequestMapping("api/homepage")
 
 public class HomePageController {
 
