@@ -19,15 +19,15 @@ public class GetUserAvatar {
 
         String image_url = userImageRequest.getAvatarUrl();
         String user_email = userImageRequest.getEmail();
-        System.out.println(user_email);
+        System.out.println("Сохранение аватара " + user_email);
         userImageService.updateUserImage(user_email, image_url);
 
     }
 
-    @GetMapping("getavatar")
+    @GetMapping("/getavatar")
     public String SendUserAvatar(@RequestParam String email) {
         String avatarUrl =  userImageService.getUserImage(email);
-        System.out.println(avatarUrl);
+        System.out.println("Отправлен аватар пользователя: " + avatarUrl);
         return avatarUrl != null ? avatarUrl : "";
     }
 
