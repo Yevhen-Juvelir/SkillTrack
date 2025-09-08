@@ -30,7 +30,7 @@ function AvatarUpload() {
             if (data.secure_url) {
                 console.log("Uploaded avatar URL:", data.secure_url);
                 setAvatarUrl(data.secure_url);
-                await axios.post('/api/users/avatar', {
+                await axios.post('http://localhost:8080/api/users/avatar', {
                     email: localStorage.getItem("userEmail"),
                     avatarUrl: data.secure_url
                 })
@@ -41,6 +41,9 @@ function AvatarUpload() {
                         console.log(error);
                     });
             } else {
+
+
+
                 console.error("Upload failed:", data);
             }
         } catch (err) {
