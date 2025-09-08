@@ -10,7 +10,7 @@ function AvatarUpload() {
         const fetchAvatarUrl = async () => {
             try {
                 const response = await axios.get(
-                    "api/users/avatar/getavatar?email=" + localStorage.getItem("userEmail"),
+                    "http://localhost:8080/api/users/avatar/getavatar?email=" + localStorage.getItem("userEmail"),
                     { responseType: 'text' }
                 );
                 console.log("api/users/avatar/getavatar?email=" + localStorage.getItem("userEmail"))
