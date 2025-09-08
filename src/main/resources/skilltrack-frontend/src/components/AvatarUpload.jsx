@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
+import { Pencil } from "lucide-react";
 
 function AvatarUpload() {
     const [file, setFile] = useState(null);
-    const [avatarUrl, setAvatarUrl] = useState("");
-
+    const [avatarUrl, setAvatarUrl] = useState(localStorage.getItem("avatarUrl") || "");
+    let fileInputRef = useRef(null);
 
     const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
     const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
@@ -29,6 +30,7 @@ function AvatarUpload() {
 
             if (data.secure_url) {
                 console.log("Uploaded avatar URL:", data.secure_url);
+                localStorage.setItem("avatarUrl", data.secure_url);
                 setAvatarUrl(data.secure_url);
                 await axios.post('http://localhost:8080/api/users/avatar', {
                     email: localStorage.getItem("userEmail"),
@@ -52,31 +54,31 @@ function AvatarUpload() {
     };
 
     return (
-        <div className="space-y-4">
+        <div className="flex items-center justify-center ui">
             <input
                 type="file"
                 accept="image/*"
-                onChange={(e) => setFile(e.target.files[0])}
+                onChange={(e) => {
+                    setFile(e.target.files[0])
+                    uploadImage()
+                }}
+                className="hidden"
+                ref={fileInputRef}
             />
-            <button
-                onClick={uploadImage}
-                disabled={!file}
-                className="px-4 py-2 bg-blue-500 text-white rounded"
-            >
-                Upload Avatar
-            </button>
-
-            {avatarUrl && (
-                <div>
-                    <p>Preview:</p>
-                    <img
-                        src={avatarUrl}
-                        alt="User avatar"
-                        className="w-20 h-20 rounded-full"
-                    />
-                </div>
-            )}
+        
+            <div className="relative">
+                {console.log(avatarUrl)}
+                <img src={avatarUrl ? avatarUrl : "./icons/user.png"} alt="" className="mt-12 w-36 h-36" />
+                <button
+                    onClick={() => fileInputRef.current.click()}
+                    className="absolute bottom-3 right-3 bg-white p-1 rounded-full shadow"
+                >
+                    <Pencil className="w-4 h-4 text-gray-600" />
+                </button>
+            </div>
         </div>
+
+            
     );
 }
 

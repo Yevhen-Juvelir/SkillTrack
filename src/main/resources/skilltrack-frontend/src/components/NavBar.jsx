@@ -31,6 +31,7 @@ const NavBar = () => {
                                 className="px-4 py-2 menu-list-item cursor-pointer"
                                 onClick={() => {
                                     localStorage.removeItem("userEmail");
+                                    localStorage.removeItem("avatarUrl");
                                     navigate("/");
                                 }}
                             >
