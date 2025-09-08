@@ -24,14 +24,12 @@ public class GetUserAvatar {
 
     }
 
-    @PostMapping("getavatar")
+    @GetMapping("getavatar")
     public String SendUserAvatar(@RequestParam String email) {
         String avatarUrl =  userImageService.getUserImage(email);
         System.out.println(avatarUrl);
         return avatarUrl != null ? avatarUrl : "";
     }
-
-
 
 
 }
