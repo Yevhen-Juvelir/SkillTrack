@@ -82,8 +82,8 @@ function AvatarUpload() {
                 ref={fileInputRef}
             />
 
-            <div className="relative">
-                <img src={avatarUrl ? avatarUrl : "./icons/user.png"} alt="" className="mt-12 w-36 h-36" />
+            <div className="relative overflow-hidden">
+                <img src={avatarUrl ? avatarUrl : "./icons/user.png"} alt="" className="rounded-full mt-12 w-36 h-36" />
                 <button
                     onClick={() => fileInputRef.current.click()}
                     className="absolute bottom-3 right-3 bg-white p-1 rounded-full shadow"

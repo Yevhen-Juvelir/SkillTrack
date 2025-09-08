@@ -5,7 +5,7 @@ import Button from '../components/Button'
 
 const HomePage = () => {
   return (
-    <div className="ui">
+    <div className="ui h-screen">
         <NavBar />
         <Moto />
     </div>
