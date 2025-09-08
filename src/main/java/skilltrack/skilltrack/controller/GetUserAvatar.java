@@ -5,7 +5,7 @@ import skilltrack.skilltrack.dto.UserImageRequest;
 import skilltrack.skilltrack.service.UserImageService;
 
 @RestController
-@RequestMapping("api/users")
+@RequestMapping("api/users/avatar")
 public class GetUserAvatar {
 
     UserImageService userImageService;
@@ -14,7 +14,7 @@ public class GetUserAvatar {
         this.userImageService = userImageService;
     }
 
-    @PostMapping("/avatar")
+    @PostMapping("")
     public void SaveUserAvatar(@RequestBody UserImageRequest userImageRequest) {
 
         String image_url = userImageRequest.getAvatarUrl();
@@ -23,5 +23,15 @@ public class GetUserAvatar {
         userImageService.updateUserImage(user_email, image_url);
 
     }
+
+    @PostMapping("getavatar")
+    public String SendUserAvatar(@RequestParam String email) {
+        String avatarUrl =  userImageService.getUserImage(email);
+        System.out.println(avatarUrl);
+        return avatarUrl != null ? avatarUrl : "";
+    }
+
+
+
 
 }

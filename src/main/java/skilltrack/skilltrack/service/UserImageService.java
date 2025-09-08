@@ -35,4 +35,12 @@ public class UserImageService {
 
     }
 
+    public String getUserImage(String user_email) {
+        if (userImageRepository.existsByEmail(user_email)) {
+            UserImageEntity userImageEntity = userImageRepository.findByEmail(user_email);
+            return userImageEntity.getImage_url();
+        }
+        return null;
+    }
+
 }
